@@ -74,7 +74,7 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
                         int result = operate(table, bolinhaLeft.result,
                                              bolinhaRight.result);
 
-                        // if the result is not already in the vector of int's
+                        // verificar se o resultado já foi calculado
                         if (resTable[start][end].find(result) ==
                             resTable[start][end].end()) {
                             dp[start][end].push_back({result, k,
@@ -118,7 +118,6 @@ int main() {
     if (solution.empty()) {
         printf("0\n");
     } else {
-        // cout << "1\n" << solution << endl;
         printf("1\n");
         printf("%s\n", solution.c_str());
     }
