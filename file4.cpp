@@ -61,6 +61,8 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
         for (int start = 0; start <= m - len; ++start) {
             int end = start + len - 1;  // Determina o final do intervalo
 
+            int index = 0;
+
             // Combinar resultados dos subintervalos [start, k] e [k+1, end]
             for (int k = end; k > start; --k) {
                 if (dp[start][end].size() >= static_cast<size_t>(n)) {
@@ -68,8 +70,6 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
                 }
 
                 for (Bolinha &bolinhaLeft : dp[start][k - 1]) {
-                    int index = 0;
-
                     for (Bolinha &bolinhaRight : dp[k][end]) {
                         int result = operate(table, bolinhaLeft.result,
                                              bolinhaRight.result);
@@ -81,35 +81,13 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
                                                       bolinhaLeft.result,
                                                       bolinhaRight.result});
                             resTable[start][end].insert({result, index});
+                            index++;
                         }
-                        index++;
                     }
                 }
             }
         }
     }
-
-    // // print dp table
-    // for (int i = 0; i < m; ++i) {
-    //     for (int j = 0; j < m; ++j) {
-    //         cout << "dp[" << i << "][" << j << "]: ";
-    //         for (const auto &res : dp[i][j]) {
-    //             cout << res.result << " ";
-    //         }
-    //         cout << endl;
-    //     }
-    // }
-
-    // // print resTable
-    // for (int i = 0; i < m; ++i) {
-    //     for (int j = 0; j < m; ++j) {
-    //         cout << "resTable[" << i << "][" << j << "]: ";
-    //         for (const auto &res : resTable[i][j]) {
-    //             cout << res.first << " " << res.second << " ";
-    //         }
-    //         cout << endl;
-    //     }
-    // }
 
     if (resTable[0][m - 1].find(desiredResult) != resTable[0][m - 1].end()) {
         int index = resTable[0][m - 1][desiredResult];
