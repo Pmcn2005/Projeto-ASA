@@ -5,12 +5,12 @@
 
 using namespace std;
 
-struct bolinha {
+typedef struct bolinha {
     int result;
     int divisonK;
     int leftResult;
     int rightResult;
-};
+} Bolinha;
 
 // Função para calcular o resultado de i ⊕ j usando a tabela de operações
 int operate(const vector<vector<int>> &table, int i, int j) {
@@ -19,7 +19,7 @@ int operate(const vector<vector<int>> &table, int i, int j) {
 
 string getExpression(vector<vector<vector<bolinha>>> &dp,
                      vector<vector<unordered_map<int, int>>> &resTable,
-                     bolinha &bolinha, int start, int end) {
+                     Bolinha &bolinha, int start, int end) {
     if (bolinha.divisonK == -1) {
         return to_string(bolinha.result);
     }
@@ -43,7 +43,7 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
     int m = sequence.size();
 
     // dp[i][j] armazena todas as expressões possíveis para o intervalo [i, j]
-    vector<vector<vector<bolinha>>> dp(m, vector<vector<bolinha>>(m));
+    vector<vector<vector<Bolinha>>> dp(m, vector<vector<Bolinha>>(m));
 
     // resTable[i][j] resultado -- Posição vetor de bolinhas
     vector<vector<unordered_map<int, int>>> resTable(
@@ -67,10 +67,10 @@ string solve(const vector<int> &sequence, const vector<vector<int>> &table,
                     break;
                 }
 
-                for (bolinha &bolinhaLeft : dp[start][k - 1]) {
+                for (Bolinha &bolinhaLeft : dp[start][k - 1]) {
                     int index = 0;
 
-                    for (bolinha &bolinhaRight : dp[k][end]) {
+                    for (Bolinha &bolinhaRight : dp[k][end]) {
                         int result = operate(table, bolinhaLeft.result,
                                              bolinhaRight.result);
 
