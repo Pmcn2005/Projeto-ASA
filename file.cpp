@@ -100,7 +100,7 @@ int main() {
         cout << "1" << endl;
         int n = solutions.size();
         cout << solutions[n - 1] << endl;
-        // for (int i = 0; i < n - 1; ++i) cout << solutions[i] << endl;
+        // for (int i = 0; i < n; ++i) cout << solutions[i] << endl;
     }
 
     return 0;
