@@ -1,6 +1,8 @@
 import time
 import subprocess
 import random
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -49,9 +51,9 @@ tempos_n = {}
 tempos_m = {}
 
 # Testes variando n de 5 a 100 e m de 10 a 1000
-for n in range(5, 101, 20):      # Incrementa n de 5 em 5 até 100
+for n in range(5, 51, 10):      # Incrementa n de 5 em 5 até 100
     tempos_n[n] = []
-    for m in range(10, 1001, 100):  # Incrementa m de 50 em 50 até 1000
+    for m in range(10, 501, 50):  # Incrementa m de 50 em 50 até 1000
         tempo = testar_velocidade(n, m)
         tempos_n[n].append(tempo)
         
@@ -65,20 +67,19 @@ for n in range(5, 101, 20):      # Incrementa n de 5 em 5 até 100
 all_f_n_m_values = []
 all_times = []
 
-print("ola")
 
 for n, tempos in tempos_n.items():
-    m_values = list(range(10, 1001, 25))
+    m_values = list(range(10, 501, 50))
     for i, m in enumerate(m_values):
-        f_n_m = n * m
+        f_n_m = m*m*m*n*n
         all_f_n_m_values.append(f_n_m)
         all_times.append(tempos[i])
 
 # Plota os pontos de dados originais
-plt.scatter(all_f_n_m_values, all_times, label="Dados experimentais", alpha=0.5, color="blue")
+# plt.scatter(all_f_n_m_values, all_times, label="Dados experimentais", alpha=0.5, color="blue")
 
 # Ajusta uma curva polinomial de tendência para todos os dados combinados
-degree = 2  # Ajusta o grau conforme necessário
+degree = 2# Ajusta o grau conforme necessário
 coef = np.polyfit(all_f_n_m_values, all_times, degree)
 poly_fn = np.poly1d(coef)
 
@@ -86,7 +87,7 @@ poly_fn = np.poly1d(coef)
 sorted_nm_values = sorted(all_f_n_m_values)  # Ordena para uma curva suave
 plt.plot(sorted_nm_values, poly_fn(sorted_nm_values), '--', label="Tendência global", color="red")
 
-plt.xlabel("f(n, m) = n * m")
+plt.xlabel("f(n, m) = m^3 * n^2")	
 plt.ylabel("Tempo de execução (segundos)")
 plt.title("Curva de tendência para tempo de execução em função de f(n, m)")
 plt.legend()
