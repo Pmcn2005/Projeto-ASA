@@ -10,10 +10,13 @@ using namespace std;
 // Função para calcular o índice de conectividade usando BFS
 int calcula_conectividade(const map<int, set<int>>& grafo_linhas) {
     int max_trocas = 0;
+
+    // Para cada linha, calcular a distância para todas as outras linhas
     for (auto it = grafo_linhas.begin(); it != grafo_linhas.end(); ++it) {
         int linha_inicial = it->first;
 
         map<int, int> dist;
+
         for (auto jt = grafo_linhas.begin(); jt != grafo_linhas.end(); ++jt) {
             dist[jt->first] = numeric_limits<int>::max();
         }
@@ -35,9 +38,6 @@ int calcula_conectividade(const map<int, set<int>>& grafo_linhas) {
         }
 
         for (auto jt = dist.begin(); jt != dist.end(); ++jt) {
-            if (jt->second == numeric_limits<int>::max()) {
-                return -1;  // Há linhas desconectadas
-            }
             max_trocas = max(max_trocas, jt->second);
         }
     }
