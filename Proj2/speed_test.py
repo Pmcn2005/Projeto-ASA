@@ -19,7 +19,8 @@ for i in range(0, 50):
       n = int(line[0])
       m = int(line[1])
       l = int(line[2])
-      f_nml.append(l*m+(l*n)*l)
+      f_nml.append(l*l*l+(l*n)*l)
+      # f_nml.append(l*l*l)
 
       f.close()
 
@@ -51,8 +52,11 @@ poly_fn = np.poly1d(coef)
 sorted_nml_values = sorted(f_nml)
 plt.plot(sorted_nml_values, poly_fn(sorted_nml_values), '-', label="Tendência global", color="red")
 
-plt.xlabel("f(n,m,l) = l*n^2 + l*m")
+plt.xlabel("f(n,m,l) = n*l^2 + l*l*l")
+# plt.xlabel("f(n,m,l) = l^3")
 plt.ylabel("Time(s)")
 plt.title("Curva de tendência para tempo de execução em função de f(n,m,l)")
 plt.legend()
+plt.savefig("speed_test.png")
 plt.show()
+plt.close()
